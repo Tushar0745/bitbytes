@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BitBytes Career Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: radial-gradient(circle at top, #0f0f0f, #1a1a1a);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 2rem;
+      background: #0f0f0f;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00f0ff;
+      box-shadow: 0 0 30px #00f0ff;
+    }
+    section {
+      padding: 2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: #111;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+      padding: 1.5rem;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      text-align: center;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+    }
+    .card h3 {
+      font-size: 1.4rem;
+      color: #00f0ff;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+    .btn {
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 8px;
+      background: #00f0ff;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .btn:hover {
+      background: #00bcd4;
+    }
+    .question-box {
+      margin: 2rem auto;
+      max-width: 600px;
+      padding: 2rem;
+      background: #1e1e1e;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,255,255,0.4);
+    }
+    .question-box h3 {
+      margin-bottom: 1rem;
+    }
+    .options label {
+      display: block;
+      margin: 1rem 0;
+      font-size: 1rem;
+    }
+    .hidden { display: none; }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #000;
+      color: #888;
+    }
+    progress {
+      width: 100%;
+      height: 10px;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>BitBytes</header>
+
+  <section id="home">
+    <div class="card-grid">
+      <div class="card">
+        <h2>Top Trending Fields</h2>
+        <canvas id="donutChart" width="200" height="200"></canvas>
+      </div>
+      <div class="card">
+        <h2>About BitBytes</h2>
+        <p>BitBytes is a futuristic platform to help you discover your most suitable career field using intelligent quizzes and analysis. Dive in and explore!</p>
+      </div>
+      <div class="card">
+        <h2>Quiz Instructions</h2>
+        <ul style="text-align:left;">
+          <li>Choose a career field to begin</li>
+          <li>Answer 10 questions honestly</li>
+          <li>Results will show your readiness</li>
+        </ul>
+        <button class="btn" onclick="loadFieldSelector()">Start Quiz</button>
+      </div>
+      <div class="card">
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:tusharahire7000@gmail.com" style="color:#00f0ff;">tusharahire7000@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="quizSection" class="hidden">
+    <div id="fieldSelectBox" class="card-grid"></div>
+
+    <div class="question-box hidden">
+      <progress id="progressBar" value="0" max="10"></progress>
+      <h3 id="question"></h3>
+      <div class="options" id="options"></div>
+      <button class="btn" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <div class="question-box hidden" id="resultBox">
+      <h3 id="resultText"></h3>
+      <button class="btn" onclick="goHome()">Exit to Home</button>
+    </div>
+  </section>
+
+  <footer>© 2025 BitBytes. All rights reserved.</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const donutChart = new Chart(document.getElementById('donutChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['AI', 'Cybersecurity', 'Cloud', 'Data Science', 'Design'],
+        datasets: [{
+          label: 'Trending Fields',
+          data: [25, 20, 18, 22, 15],
+          backgroundColor: ['#00f0ff', '#00ff88', '#ffcc00', '#ff4444', '#aa00ff'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff'
+            }
+          }
+        }
+      }
+    });
+
+    const questions = {
+      
+  'AI': [
+    "Do you understand the difference between supervised and unsupervised learning?",
+    "Have you built a neural network using frameworks like TensorFlow or PyTorch?",
+    "Do you know how to handle overfitting in models?",
+    "Can you preprocess data for training machine learning models?",
+    "Do you understand reinforcement learning concepts?",
+    "Are you familiar with model evaluation techniques like precision and recall?",
+    "Have you implemented any machine learning projects end-to-end?",
+    "Do you follow AI research papers or conferences?",
+    "Have you explored computer vision or NLP applications?",
+    "Do you use tools like Jupyter Notebook for AI workflows?"
+  ],
+  'Cybersecurity': [
+    "Do you understand what a firewall does?",
+    "Have you performed any penetration testing or ethical hacking?",
+    "Do you know what multi-factor authentication is?",
+    "Can you identify a phishing or social engineering attack?",
+    "Are you familiar with encryption protocols like SSL/TLS?",
+    "Do you stay updated on recent cybersecurity threats?",
+    "Have you taken any security certifications (e.g., CEH, Security+)?",
+    "Do you understand how antivirus software detects malware?",
+    "Can you audit and secure web applications?",
+    "Do you understand vulnerability assessment techniques?"
+  ],
+  'Cloud Computing': [
+    "Do you have experience deploying apps on AWS, Azure, or GCP?",
+    "Can you explain the difference between IaaS, PaaS, and SaaS?",
+    "Have you worked with virtual machines or containerization tools like Docker?",
+    "Are you familiar with serverless architectures?",
+    "Can you manage databases hosted on the cloud?",
+    "Do you understand horizontal vs vertical scaling?",
+    "Have you set up CI/CD pipelines using cloud services?",
+    "Can you monitor cloud services using tools like CloudWatch?",
+    "Do you know how to configure IAM roles and permissions?",
+    "Have you used Kubernetes or similar orchestration tools?"
+  ],
+  'Data Science': [
+    "Can you perform data cleaning and transformation tasks?",
+    "Do you know how to visualize data using matplotlib or seaborn?",
+    "Can you build and interpret a regression model?",
+    "Are you comfortable using pandas and NumPy?",
+    "Do you understand concepts like outliers and missing values?",
+    "Have you used machine learning algorithms for classification or clustering?",
+    "Do you understand feature engineering techniques?",
+    "Can you evaluate model accuracy using cross-validation?",
+    "Have you used real-world datasets for practice?",
+    "Are you familiar with SQL for data querying?"
+  ],
+  'UX/UI Design': [
+    "Have you created wireframes or mockups using Figma or Adobe XD?",
+    "Do you understand the principles of user-centered design?",
+    "Can you design mobile-responsive interfaces?",
+    "Have you done usability testing with users?",
+    "Do you apply design heuristics while prototyping?",
+    "Are you familiar with UI trends like neumorphism or glassmorphism?",
+    "Have you considered accessibility in your designs?",
+    "Do you create user personas and journey maps?",
+    "Can you design for both light and dark modes?",
+    "Do you follow Apple or Google Material Design guidelines?"
+  ],
+  'Medicine': [
+    "Can you name major human body systems?",
+    "Do you understand how to read blood reports?",
+    "Have you studied common diseases and treatments?",
+    "Are you aware of patient safety and hygiene protocols?",
+    "Do you understand medical terminologies and abbreviations?",
+    "Have you observed or participated in clinical rounds?",
+    "Do you understand ethical responsibilities of a doctor?",
+    "Have you attended any first aid or CPR training?",
+    "Can you differentiate between bacterial and viral infections?",
+    "Do you understand the basics of pharmacology?"
+  ],
+  'Law': [
+    "Do you understand the constitution and its key articles?",
+    "Can you explain the difference between civil and criminal law?",
+    "Have you read any landmark legal judgments?",
+    "Do you know how to draft legal documents or contracts?",
+    "Have you participated in moot courts or debates?",
+    "Do you stay updated with recent laws and amendments?",
+    "Are you familiar with legal terminology?",
+    "Do you understand the court hierarchy in India?",
+    "Can you identify human rights and legal rights violations?",
+    "Have you shadowed or interned with a lawyer?"
+  ],
+  'Teaching': [
+    "Do you enjoy explaining concepts to others?",
+    "Have you created lesson plans or teaching aids?",
+    "Can you manage a class and maintain discipline?",
+    "Are you aware of different student learning styles?",
+    "Do you use storytelling or visual aids to teach?",
+    "Have you tutored students in the past?",
+    "Do you give constructive feedback to learners?",
+    "Are you familiar with Bloom's Taxonomy?",
+    "Have you used digital platforms for teaching?",
+    "Do you understand formative vs summative assessment?"
+  ],
+  'Doctor': [
+    "Do you understand basic human anatomy?",
+    "Have you assisted in clinical procedures or checkups?",
+    "Can you communicate empathetically with patients?",
+    "Do you know how to handle emergency situations?",
+    "Are you trained in basic first aid or CPR?",
+    "Do you know how to read ECG or X-ray reports?",
+    "Are you preparing for any medical entrance exams?",
+    "Have you worked or interned in a hospital setting?",
+    "Do you follow hygiene and infection control protocols?",
+    "Do you understand common diagnostic procedures?"
+  ],
+  'Arts': [
+    "Have you practiced sketching, painting or sculpture?",
+    "Do you study art history or famous artists?",
+    "Do you maintain an art portfolio?",
+    "Have you participated in exhibitions or competitions?",
+    "Are you familiar with digital art tools?",
+    "Do you explore various art styles and mediums?",
+    "Have you received any formal training in arts?",
+    "Do you experiment with creative ideas regularly?",
+    "Are you open to art critique and feedback?",
+    "Do you follow modern and contemporary art trends?"
+  ],
+  'Engineering': [
+    "Are you comfortable with physics and mathematics?",
+    "Have you built or designed any project or prototype?",
+    "Do you use engineering drawing or simulation tools?",
+    "Have you attended technical workshops or fests?",
+    "Do you participate in robotics or coding competitions?",
+    "Have you studied thermodynamics, mechanics or circuits?",
+    "Can you troubleshoot technical issues effectively?",
+    "Have you done internships in any engineering field?",
+    "Are you preparing for GATE, JEE or similar exams?",
+    "Can you work collaboratively on engineering teams?"
+  ],
+  'Finance': [
+    "Can you read and understand financial statements?",
+    "Do you follow economic news and stock market trends?",
+    "Have you used Excel for budgeting or planning?",
+    "Are you familiar with taxation and compliance basics?",
+    "Do you understand the concept of investment and ROI?",
+    "Have you studied accounting principles?",
+    "Can you differentiate between assets and liabilities?",
+    "Do you follow business news channels or magazines?",
+    "Have you created or managed a financial plan?",
+    "Do you understand banking and financial regulations?"
+  ],
+  'Marketing': [
+    "Do you understand the 4Ps of marketing?",
+    "Have you created any digital or social media campaigns?",
+    "Do you know what market segmentation means?",
+    "Are you familiar with content or email marketing?",
+    "Can you analyze marketing metrics or performance?",
+    "Do you understand branding and positioning strategies?",
+    "Have you worked with Google Ads or Facebook Ads?",
+    "Do you write marketing copy or promotional content?",
+    "Have you studied consumer behavior trends?",
+    "Do you follow marketing podcasts, blogs or news?"
+  ],
+  'Entrepreneurship': [
+    "Have you started or planned any business idea?",
+    "Do you understand business models and revenue streams?",
+    "Have you pitched ideas to mentors or investors?",
+    "Do you follow startup trends and innovations?",
+    "Can you handle failures and uncertainties in business?",
+    "Have you built a minimum viable product (MVP)?",
+    "Do you manage finances or resources efficiently?",
+    "Are you comfortable making decisions independently?",
+    "Do you mentor or lead small teams or clubs?",
+    "Have you attended startup events or bootcamps?"
+  ],
+  'Game Development': [
+    "Have you created any games using Unity or Unreal Engine?",
+    "Do you understand basic game physics or AI?",
+    "Can you design 2D or 3D assets for games?",
+    "Have you scripted game logic using C# or other languages?",
+    "Do you test and debug gameplay mechanics?",
+    "Are you familiar with the game development lifecycle?",
+    "Do you follow popular indie or AAA game studios?",
+    "Have you published or showcased your games?",
+    "Do you participate in game jams or dev forums?",
+    "Can you collaborate with artists and sound designers?"
+  ]
+    };
+
+    let fields = Object.keys(questions);
+    let currentField = '';
+    let currentIndex = 0;
+    let score = 0;
+
+    function loadFieldSelector() {
+      const container = document.getElementById('fieldSelectBox');
+      container.innerHTML = '';
+      fields.forEach(field => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.cursor = 'pointer';
+        card.innerHTML = <h3>${field}</h3><p>Click to begin quiz</p>;
+        card.onclick = () => startQuiz(field);
+        container.appendChild(card);
+      });
+
+      document.getElementById('home').classList.add('hidden');
+      document.getElementById('quizSection').classList.remove('hidden');
+      document.getElementById('resultBox').classList.add('hidden');
+      document.querySelector('.question-box').classList.add('hidden');
+      document.getElementById('fieldSelectBox').classList.remove('hidden');
+    }
+
+    function startQuiz(selectedField) {
+      currentField = selectedField;
+      currentIndex = 0;
+      score = 0;
+      document.getElementById('fieldSelectBox').classList.add('hidden');
+      document.querySelector('.question-box').classList.remove('hidden');
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const q = questions[currentField][currentIndex];
+      document.getElementById('question').innerText = (${currentIndex + 1}/10) ${q};
+      document.getElementById('progressBar').value = currentIndex + 1;
+      const optDiv = document.getElementById('options');
+      optDiv.innerHTML = '';
+      ['Yes', 'No'].forEach(opt => {
+        const label = document.createElement('label');
+        label.innerHTML = <input type="radio" name="option" value="${opt}"> ${opt};
+        optDiv.appendChild(label);
+      });
+    }
+
+    function nextQuestion() {
+      const selected = document.querySelector('input[name="option"]:checked');
+      if (!selected) return alert("Select an option");
+      if (selected.value === 'Yes') score++;
+      currentIndex++;
+      if (currentIndex < 10) showQuestion();
+      else showResult();
+    }
+
+    function showResult() {
+      const resultText = Score: ${score}/10\nYou are ${score >= 7 ? 'ready' : 'not ready'} for a career in ${currentField}.;
+      document.getElementById('resultText').innerText = resultText;
+      document.querySelector('.question-box').classList.add('hidden');
+      document.getElementById('resultBox').classList.remove('hidden');
+    }
+
+    function goHome() {
+      document.getElementById('home').classList.remove('hidden');
+      document.getElementById('quizSection').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

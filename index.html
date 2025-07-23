@@ -6,7 +6,137 @@
   <title>BitBytes Career Quiz</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* (same styles as your current code, unchanged) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #0f0f0f, #1a1a1a);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #0f0f0f;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #00f0ff;
+      box-shadow: 0 0 20px #00f0ff;
+    }
+
+    section {
+      padding: 2rem 1rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .card-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .card {
+      background: #111;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .card h2, .card h3 {
+      font-size: 1.3rem;
+      color: #00f0ff;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p, .card li {
+      font-size: 1rem;
+      color: #ccc;
+      margin: 0.4rem 0;
+    }
+
+    .chart-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .circle-field {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: #00f0ff20;
+      border: 3px solid #00f0ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-size: 0.9rem;
+      color: #00f0ff;
+      font-weight: 600;
+    }
+
+    .btn {
+      padding: 0.7rem 2rem;
+      border: none;
+      border-radius: 8px;
+      background: #00f0ff;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background: #00e6e6;
+    }
+
+    .question-box {
+      margin: 2rem auto;
+      max-width: 600px;
+      padding: 2rem;
+      background: #1e1e1e;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,255,255,0.4);
+    }
+
+    .question-box h3 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .options label {
+      display: block;
+      margin: 1rem 0;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #000;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    progress {
+      width: 100%;
+      height: 10px;
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -16,7 +146,13 @@
     <div class="card-grid">
       <div class="card">
         <h2>Top Trending Fields</h2>
-        <canvas id="donutChart" width="200" height="200"></canvas>
+        <div class="chart-wrapper">
+          <div class="circle-field">AI<br>25%</div>
+          <div class="circle-field">Cybersecurity<br>20%</div>
+          <div class="circle-field">Data Science<br>22%</div>
+          <div class="circle-field">Cloud<br>18%</div>
+          <div class="circle-field">Design<br>15%</div>
+        </div>
       </div>
       <div class="card">
         <h2>About BitBytes</h2>
@@ -56,32 +192,9 @@
 
   <footer>© 2025 BitBytes. All rights reserved.</footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const donutChart = new Chart(document.getElementById('donutChart'), {
-      type: 'doughnut',
-      data: {
-        labels: ['AI', 'Cybersecurity', 'Cloud', 'Data Science', 'Design'],
-        datasets: [{
-          label: 'Trending Fields',
-          data: [25, 20, 18, 22, 15],
-          backgroundColor: ['#00f0ff', '#00ff88', '#ffcc00', '#ff4444', '#aa00ff'],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        plugins: {
-          legend: {
-            labels: {
-              color: '#fff'
-            }
-          }
-        }
-      }
-    });
-
-    const questions = { 
-	'AI': [
+    const questions = {
+      'AI': [
     "Do you understand the difference between supervised and unsupervised learning?",
     "Have you built a neural network using frameworks like TensorFlow or PyTorch?",
     "Do you know how to handle overfitting in models?",
@@ -260,9 +373,8 @@
     "Have you published or showcased your games?",
     "Do you participate in game jams or dev forums?",
     "Can you collaborate with artists and sound designers?"
-  ]	
-
-	 };
+  ]
+    };
 
     let fields = Object.keys(questions);
     let currentField = '';
@@ -299,7 +411,7 @@
 
     function showQuestion() {
       const q = questions[currentField][currentIndex];
-      document.getElementById('question').innerText = `${currentIndex + 1}/10: ${q}`;
+      document.getElementById('question').innerText = `${currentIndex + 1}/10. ${q}`;
       document.getElementById('progressBar').value = currentIndex + 1;
       const optDiv = document.getElementById('options');
       optDiv.innerHTML = '';
@@ -312,7 +424,7 @@
 
     function nextQuestion() {
       const selected = document.querySelector('input[name="option"]:checked');
-      if (!selected) return alert("Select an option");
+      if (!selected) return alert("Please select an option");
       if (selected.value === 'Yes') score++;
       currentIndex++;
       if (currentIndex < 10) showQuestion();
@@ -320,10 +432,9 @@
     }
 
     function showResult() {
-      const resultText = `Score: ${score}/10\nYou are ${score >= 7 ? 'ready' : 'not ready'} for a career in ${currentField}.`;
-      document.getElementById('resultText').innerText = resultText;
       document.getElementById('questionBox').classList.add('hidden');
       document.getElementById('resultBox').classList.remove('hidden');
+      document.getElementById('resultText').innerText = `Score: ${score}/10\nYou are ${score >= 7 ? 'ready' : 'not ready'} for a career in ${currentField}.`;
     }
 
     function goHome() {

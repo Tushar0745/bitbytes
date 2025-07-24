@@ -28,6 +28,18 @@
 
 ---
 
+## ⚠️ License & Restrictions
+
+This project is **NOT open source**.
+
+- 🔒 All rights reserved © 2025 Tushar Ahire
+- 🧑‍💻 You may use the live version: [BitBytes Website](https://tushar0745.github.io/bitbytes/)
+- ❌ You may **not copy, modify, or reuse** the code or design without permission.
+
+📩 Contact: [tusharahire7000@gmail.com](mailto:tusharahire7000@gmail.com) for licensing.
+
+---
+
 ## 🛠️ Installation & Use (Optional for Developers)
 
 ```bash

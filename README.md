@@ -34,3 +34,31 @@
 git clone https://github.com/tushar0745/bitbytes.git
 cd bitbytes
 # Open index.html in any browser
+
+---
+
+🙋‍♂️ Contribute
+We welcome contributions! Whether it's a bug fix, new feature, or documentation, feel free to open issues or pull requests.
+See CONTRIBUTING.md for guidelines.
+
+---
+
+📜 License
+This project is licensed under the MIT License — see the LICENSE file for details.
+
+---
+
+📩 Contact
+📧 tusharahire7000@gmail.com
+
+---
+
+### ✅ `LICENSE` (MIT – Already Provided, Repeat for Convenience)
+
+```text
+MIT License
+
+Copyright (c) 2025 BitBytes (Tushar Ahire)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy...
+[Full MIT License as in previous message]

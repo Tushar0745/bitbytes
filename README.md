@@ -1,4 +1,5 @@
-![BitBytes Banner](./assets/banner.png)
+![BitBytes Banner](assets/banner.png)
+
 
 
 # BitBytes 🚀  

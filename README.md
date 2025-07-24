@@ -1,7 +1,3 @@
-![BitBytes Banner](assets/banner.png)
-
-
-
 # BitBytes 🚀  
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Deployed-success?style=flat-square)
 ![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)

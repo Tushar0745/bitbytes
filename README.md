@@ -19,3 +19,18 @@
 - 💡 Quiz logic and result display
 
 ---
+
+## 💡 Technologies Used
+
+- HTML5, CSS3
+- JavaScript (Vanilla)
+- GitHub Pages for deployment
+
+---
+
+## 🛠️ Installation & Use (Optional for Developers)
+
+```bash
+git clone https://github.com/tushar0745/bitbytes.git
+cd bitbytes
+# Open index.html in any browser

@@ -635,4 +635,148 @@
 
     const fieldDefinitions = {
         'AI': 'Artificial Intelligence focuses on creating intelligent machines that can learn, reason, and perceive. This field involves machine learning, neural networks, and developing systems that mimic human intelligence.',
-        'Cybersecurity': 'Cybersecurity protects systems, networks, and programs from digital attacks and unauthorized access. It involves understand
+        'Cybersecurity': 'Cybersecurity protects systems, networks, and programs from digital attacks and unauthorized access. It involves understand threats, vulnerabilities, and implementing security measures.',
+        'Cloud Computing': 'Cloud Computing delivers on-demand computing services—from applications to storage—over the internet. Professionals manage cloud infrastructure and services on platforms like AWS, Azure, or GCP.',
+        'Data Science': 'Data Science involves extracting knowledge and insights from structured and unstructured data using scientific methods, algorithms, and systems. It combines statistics, computer science, and domain expertise.',
+        'UX/UI Design': 'UX/UI Design focuses on creating user-friendly and aesthetically pleasing interfaces for digital products. UX (User Experience) is about how a user interacts with a product, while UI (User Interface) is about its visual layout and elements.',
+        'Medicine': 'Medicine is the science and art of healing, encompassing diagnosis, prognosis, prevention, and treatment of disease. It requires deep knowledge of human anatomy, physiology, and pathology.',
+        'Law': 'Law is a system of rules created and enforced through social or governmental institutions to regulate behavior. Legal professionals interpret and apply these rules in various contexts, from criminal justice to corporate law.',
+        'Teaching': 'Teaching involves imparting knowledge, skills, and values to students in educational settings. Effective teachers adapt to different learning styles and create engaging learning environments.',
+        'Doctor': 'A Doctor is a medical professional who diagnoses and treats illnesses and injuries to maintain or restore health. This role demands extensive medical knowledge, empathy, and strong communication skills.',
+        'Arts': 'Arts encompass a diverse range of human activities in creating visual, auditory, or performing artifacts, expressing imaginative or technical skill. This includes painting, sculpture, music, dance, and more.',
+        'Engineering': 'Engineering applies scientific and mathematical principles to design, build, and maintain structures, machines, and systems. It involves problem-solving, innovation, and practical application of scientific knowledge.',
+        'Finance': 'Finance is the management of large amounts of money, especially by governments or large companies. It deals with investment, credit, banking, and financial markets.',
+        'Marketing': 'Marketing promotes products or services, including research, advertising, selling, and distribution. It involves understanding consumer behavior, market trends, and branding strategies.',
+        'Entrepreneurship': 'Entrepreneurship is the process of designing, launching, and running a new business, often with a high risk but also high reward potential. It requires creativity, resilience, and business acumen.',
+        'Game Development': 'Game Development is the process of creating video games, from concept and design to programming and testing. It combines creativity, technical skills, and a passion for interactive entertainment.'
+    };
+
+    const positiveQuotes = [
+      "The only way to do great work is to love what you do. - Steve Jobs",
+      "Believe you can and you're halfway there. - Theodore Roosevelt",
+      "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+      "It is during our darkest moments that we must focus to see the light. - Aristotle Onassis",
+      "Success is not final, failure is not fatal: it is the courage to continue that counts. - Winston Churchill",
+      "Don't watch the clock; do what it does. Keep going. - Sam Levenson",
+      "The best way to predict the future is to create it. - Peter Drucker",
+      "Opportunities don't happen, you create them. - Chris Grosser",
+      "The road to success and the road to failure are almost exactly the same. - Colin R. Davis",
+      "The only limit to our realization of tomorrow will be our doubts of today. - Franklin D. Roosevelt",
+      "The mind is everything. What you think you become. - Buddha",
+      "Strive not to be a success, but rather to be of value. - Albert Einstein",
+      "The only true wisdom is in knowing you know nothing. - Socrates",
+      "What you get by achieving your goals is not as important as what you become by achieving your goals. - Zig Ziglar",
+      "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment. - Ralph Waldo Emerson",
+      "The expert in anything was once a beginner. - Helen Hayes",
+      "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. - Steve Jobs",
+      "If you are not willing to risk the usual, you will have to settle for the ordinary. - Jim Rohn",
+      "All our dreams can come true, if we have the courage to pursue them. - Walt Disney",
+      "The harder I work, the luckier I get. - Gary Player"
+    ];
+
+    let fields = Object.keys(questions);
+    let currentField = '';
+    let currentIndex = 0;
+    let score = 0;
+
+    // Initially show the welcome screen
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById('welcomeScreen').classList.remove('hidden');
+        document.getElementById('home').classList.add('hidden');
+        document.getElementById('quizSection').classList.add('hidden');
+        document.getElementById('endScreen').classList.add('hidden');
+        // Attach event listener to the "Start Quiz" button in definition box
+        document.getElementById('startQuizFromDefinitionBtn').onclick = () => startQuiz(currentField);
+    });
+
+    function showHome() {
+      document.getElementById('welcomeScreen').classList.add('hidden');
+      document.getElementById('home').classList.remove('hidden');
+      document.getElementById('quizSection').classList.add('hidden');
+      document.getElementById('endScreen').classList.add('hidden');
+    }
+
+    function loadFieldSelector() {
+      const container = document.getElementById('fieldSelectBox');
+      container.innerHTML = '';
+      fields.forEach(field => {
+        const card = document.createElement('div');
+        card.className = 'card field-card';
+        card.style.cursor = 'pointer';
+        card.innerHTML = `<h3>${field}</h3><p>Click for details</p>`; // Simplified text here
+        // Changed click to show definition first
+        card.onclick = () => showFieldDefinition(field);
+        container.appendChild(card);
+      });
+
+      document.getElementById('home').classList.add('hidden');
+      document.getElementById('quizSection').classList.remove('hidden');
+      document.getElementById('resultBox').classList.add('hidden');
+      document.getElementById('questionBox').classList.add('hidden');
+      document.getElementById('fieldDefinitionBox').classList.add('hidden'); // Hide definition box
+      document.getElementById('fieldSelectBox').classList.remove('hidden'); // Show field selection
+    }
+
+    function showFieldDefinition(field) {
+        currentField = field; // Set currentField so startQuiz can use it
+        document.getElementById('fieldSelectBox').classList.add('hidden'); // Hide field selection
+        document.getElementById('fieldDefinitionBox').classList.remove('hidden'); // Show definition box
+
+        document.getElementById('fieldDefinitionTitle').innerText = field;
+        document.getElementById('fieldDefinitionText').innerText = fieldDefinitions[field];
+    }
+
+
+    function startQuiz(selectedField) {
+      currentField = selectedField;
+      currentIndex = 0;
+      score = 0;
+      document.getElementById('fieldDefinitionBox').classList.add('hidden'); // Hide definition box
+      document.getElementById('questionBox').classList.remove('hidden'); // Show question box
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const q = questions[currentField][currentIndex];
+      document.getElementById('question').innerText = `${currentIndex + 1}/10. ${q}`;
+      document.getElementById('progressBar').value = currentIndex + 1;
+      const optDiv = document.getElementById('options');
+      optDiv.innerHTML = '';
+      ['Yes', 'No'].forEach(opt => {
+        const label = document.createElement('label');
+        label.innerHTML = `<input type="radio" name="option" value="${opt}"> ${opt}`;
+        optDiv.appendChild(label);
+      });
+    }
+
+    function nextQuestion() {
+      const selected = document.querySelector('input[name="option"]:checked');
+      if (!selected) return alert("Please select an option");
+      if (selected.value === 'Yes') score++;
+      currentIndex++;
+      if (currentIndex < 10) showQuestion();
+      else showResult();
+    }
+
+    function showResult() {
+      document.getElementById('questionBox').classList.add('hidden');
+      document.getElementById('resultBox').classList.remove('hidden');
+      document.getElementById('resultText').innerText = `Score: ${score}/10\nYou are ${score >= 7 ? 'ready' : 'not ready'} for a career in ${currentField}.`;
+    }
+
+    function showEndScreen() {
+      document.getElementById('quizSection').classList.add('hidden');
+      document.getElementById('endScreen').classList.remove('hidden');
+      const randomIndex = Math.floor(Math.random() * positiveQuotes.length);
+      document.getElementById('quoteText').innerText = positiveQuotes[randomIndex];
+    }
+
+    function goHome() {
+      document.getElementById('home').classList.remove('hidden');
+      document.getElementById('quizSection').classList.add('hidden');
+      document.getElementById('endScreen').classList.add('hidden');
+      document.getElementById('welcomeScreen').classList.add('hidden'); // Ensure welcome is hidden if coming from end screen
+    }
+  </script>
+</body>
+</html>

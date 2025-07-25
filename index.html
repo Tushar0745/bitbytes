@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BitBytes Career Quiz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=wrap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -60,6 +60,17 @@
       color: #ccc;
       margin: 0.4rem 0;
     }
+
+    /* Added hover effect for clickable field cards */
+    .card.field-card {
+        transition: all 0.3s ease;
+    }
+    .card.field-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        background-color: #1a1a1a;
+    }
+
 
     .chart-wrapper {
       display: flex;
@@ -136,13 +147,243 @@
       width: 100%;
       height: 10px;
       margin-bottom: 1rem;
+      /* Custom progress bar styles */
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      border-radius: 5px;
+      overflow: hidden; /* Ensures the bar inside is also rounded */
+    }
+
+    progress::-webkit-progress-bar {
+      background-color: #333;
+      border-radius: 5px;
+    }
+
+    progress::-webkit-progress-value {
+      background-color: #00f0ff;
+      border-radius: 5px;
+    }
+
+    progress::-moz-progress-bar {
+      background-color: #00f0ff;
+      border-radius: 5px;
+    }
+
+
+    /* Welcome and End Screen Specific Styles */
+    .full-screen-message {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 8rem); /* Adjust for header and footer */
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .full-screen-message h2 {
+      font-size: 3rem;
+      color: #00f0ff;
+      margin-bottom: 1.5rem;
+    }
+
+    .full-screen-message p {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-bottom: 2rem;
+      max-width: 800px;
+    }
+
+    .full-screen-message .btn {
+      width: auto;
+      min-width: 200px;
+    }
+
+    /* New style for the definition box */
+    #fieldDefinitionBox {
+        margin: 2rem auto;
+        max-width: 600px;
+        padding: 2rem;
+        background: #1e1e1e;
+        border-radius: 20px;
+        box-shadow: 0 0 15px rgba(0,255,255,0.4);
+        text-align: center;
+    }
+    #fieldDefinitionBox h3 {
+        color: #00f0ff;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    #fieldDefinitionBox p {
+        color: #ccc;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+
+    /* --- Responsive Design --- */
+
+    /* Tablets and small desktops (up to 768px) */
+    @media (max-width: 768px) {
+      header {
+        font-size: 2rem;
+        padding: 1.5rem 1rem;
+      }
+
+      section {
+        padding: 1.5rem 1rem;
+      }
+
+      .card {
+        padding: 1rem;
+      }
+
+      .card h2, .card h3 {
+        font-size: 1.2rem;
+      }
+
+      .card p, .card li {
+        font-size: 0.95rem;
+      }
+
+      .circle-field {
+        width: 100px;
+        height: 100px;
+        font-size: 0.8rem;
+      }
+
+      .question-box, #fieldDefinitionBox {
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+      }
+
+      .question-box h3 {
+        font-size: 1.1rem;
+      }
+      #fieldDefinitionBox h3 {
+        font-size: 1.3rem;
+      }
+      #fieldDefinitionBox p {
+        font-size: 1rem;
+      }
+
+
+      .options label {
+        font-size: 0.95rem;
+      }
+
+      .full-screen-message h2 {
+        font-size: 2.5rem;
+      }
+
+      .full-screen-message p {
+        font-size: 1.1rem;
+      }
+
+      .full-screen-message .btn {
+        min-width: 180px;
+        padding: 0.6rem 1.5rem;
+      }
+    }
+
+    /* Mobile phones (up to 480px) */
+    @media (max-width: 480px) {
+      header {
+        font-size: 1.8rem;
+        padding: 1rem 0.5rem;
+      }
+
+      section {
+        padding: 1rem 0.5rem;
+      }
+
+      .card-grid {
+        gap: 1.5rem;
+      }
+
+      .card {
+        padding: 1rem;
+      }
+
+      .card h2, .card h3 {
+        font-size: 1.1rem;
+      }
+
+      .card p, .card li {
+        font-size: 0.9rem;
+      }
+
+      .circle-field {
+        width: 90px;
+        height: 90px;
+        font-size: 0.75rem;
+        border-width: 2px;
+      }
+
+      .question-box, #fieldDefinitionBox {
+        margin: 1rem auto;
+        padding: 1rem;
+        border-radius: 15px;
+      }
+
+      .question-box h3 {
+        font-size: 1rem;
+      }
+      #fieldDefinitionBox h3 {
+        font-size: 1.1rem;
+      }
+      #fieldDefinitionBox p {
+        font-size: 0.95rem;
+      }
+
+      .options label {
+        font-size: 0.9rem;
+        margin: 0.8rem 0;
+      }
+
+      .btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+        width: 100%; /* Ensure buttons are full width on small screens */
+      }
+
+      .full-screen-message {
+        min-height: calc(100vh - 6rem); /* Adjust for smaller header/footer */
+        padding: 1rem;
+      }
+
+      .full-screen-message h2 {
+        font-size: 2rem;
+      }
+
+      .full-screen-message p {
+        font-size: 1rem;
+      }
+
+      .full-screen-message .btn {
+        min-width: 150px;
+      }
+
+      footer {
+        padding: 0.8rem;
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
 <body>
   <header>BitBytes</header>
 
-  <section id="home">
+  <section id="welcomeScreen">
+    <div class="full-screen-message">
+      <h2>Welcome to BitBytes Career Quiz!</h2>
+      <p>Discover your perfect career path with our intelligent quiz and insightful analysis. Answer a few questions about your interests and skills to find out where you truly belong in the tech world. Our quiz covers diverse fields like AI, Cybersecurity, Data Science, UX/UI Design, and more!</p>
+      <button class="btn" onclick="showHome()">Start Exploring</button>
+    </div>
+  </section>
+
+  <section id="home" class="hidden">
     <div class="card-grid">
       <div class="card">
         <h2>Top 5 Trending Fields</h2>
@@ -177,6 +418,13 @@
   <section id="quizSection" class="hidden">
     <div id="fieldSelectBox" class="card-grid"></div>
 
+    <div class="question-box hidden" id="fieldDefinitionBox">
+      <h3 id="fieldDefinitionTitle"></h3>
+      <p id="fieldDefinitionText"></p>
+      <button class="btn" id="startQuizFromDefinitionBtn">Start Quiz</button>
+      <button class="btn" onclick="loadFieldSelector()">Back to Fields</button>
+    </div>
+
     <div class="question-box hidden" id="questionBox">
       <progress id="progressBar" value="0" max="10"></progress>
       <h3 id="question"></h3>
@@ -186,13 +434,22 @@
 
     <div class="question-box hidden" id="resultBox">
       <h3 id="resultText"></h3>
-      <button class="btn" onclick="goHome()">Exit to Home</button>
+      <button class="btn" onclick="showEndScreen()">See Inspirational Quote</button>
+    </div>
+  </section>
+
+  <section id="endScreen" class="hidden">
+    <div class="full-screen-message">
+      <h2>Congratulations!</h2>
+      <p id="quoteText"></p>
+      <button class="btn" onclick="goHome()">Start New Quiz</button>
     </div>
   </section>
 
   <footer>© 2025 BitBytes. All rights reserved.</footer>
 
   <script>
+    // Global variables (correctly placed outside any function)
     const questions = {
       'AI': [
     "Do you understand the difference between supervised and unsupervised learning?",
@@ -376,71 +633,6 @@
   ]
     };
 
-    let fields = Object.keys(questions);
-    let currentField = '';
-    let currentIndex = 0;
-    let score = 0;
-
-    function loadFieldSelector() {
-      const container = document.getElementById('fieldSelectBox');
-      container.innerHTML = '';
-      fields.forEach(field => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.style.cursor = 'pointer';
-        card.innerHTML = `<h3>${field}</h3><p>Click to begin quiz</p>`;
-        card.onclick = () => startQuiz(field);
-        container.appendChild(card);
-      });
-
-      document.getElementById('home').classList.add('hidden');
-      document.getElementById('quizSection').classList.remove('hidden');
-      document.getElementById('resultBox').classList.add('hidden');
-      document.getElementById('questionBox').classList.add('hidden');
-      document.getElementById('fieldSelectBox').classList.remove('hidden');
-    }
-
-    function startQuiz(selectedField) {
-      currentField = selectedField;
-      currentIndex = 0;
-      score = 0;
-      document.getElementById('fieldSelectBox').classList.add('hidden');
-      document.getElementById('questionBox').classList.remove('hidden');
-      showQuestion();
-    }
-
-    function showQuestion() {
-      const q = questions[currentField][currentIndex];
-      document.getElementById('question').innerText = `${currentIndex + 1}/10. ${q}`;
-      document.getElementById('progressBar').value = currentIndex + 1;
-      const optDiv = document.getElementById('options');
-      optDiv.innerHTML = '';
-      ['Yes', 'No'].forEach(opt => {
-        const label = document.createElement('label');
-        label.innerHTML = `<input type="radio" name="option" value="${opt}"> ${opt}`;
-        optDiv.appendChild(label);
-      });
-    }
-
-    function nextQuestion() {
-      const selected = document.querySelector('input[name="option"]:checked');
-      if (!selected) return alert("Please select an option");
-      if (selected.value === 'Yes') score++;
-      currentIndex++;
-      if (currentIndex < 10) showQuestion();
-      else showResult();
-    }
-
-    function showResult() {
-      document.getElementById('questionBox').classList.add('hidden');
-      document.getElementById('resultBox').classList.remove('hidden');
-      document.getElementById('resultText').innerText = `Score: ${score}/10\nYou are ${score >= 7 ? 'ready' : 'not ready'} for a career in ${currentField}.`;
-    }
-
-    function goHome() {
-      document.getElementById('home').classList.remove('hidden');
-      document.getElementById('quizSection').classList.add('hidden');
-    }
-  </script>
-</body>
-</html>
+    const fieldDefinitions = {
+        'AI': 'Artificial Intelligence focuses on creating intelligent machines that can learn, reason, and perceive. This field involves machine learning, neural networks, and developing systems that mimic human intelligence.',
+        'Cybersecurity': 'Cybersecurity protects systems, networks, and programs from digital attacks and unauthorized access. It involves understanding threats

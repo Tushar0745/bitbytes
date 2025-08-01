@@ -12,7 +12,7 @@
 
 ## ✨ Features
 
-- 📊 Donut chart showing popularity of tech fields
+- 📊 Fields inside the circle showing popularity of tech fields
 - 🧠 Career-based quizzes (15+ categories)
 - 🖥️ Responsive and animated UI
 - 🎯 One-click quiz access, no login required

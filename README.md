@@ -40,11 +40,3 @@ This project is **NOT open source**.
 
 ---
 
-## 🛠️ Installation & Use (Optional for Developers)
-
-```bash
-git clone https://github.com/tushar0745/bitbytes.git
-cd bitbytes
-# Open index.html in any browser
-
----
